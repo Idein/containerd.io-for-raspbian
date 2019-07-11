@@ -1,0 +1,12 @@
+Package: containerd.io
+Version: 1.2.7-1
+Architecture: armhf
+Maintainer: Containerd team <help@containerd.io>
+Depends: init-system-helpers (>= 1.18~), libc6 (>= 2.14), libseccomp2 (>= 2.3.0)
+Conflicts: containerd, runc
+Replaces: containerd, runc
+Provides: containerd, runc
+Section: devel
+Priority: optional
+Homepage: https://containerd.io
+Description: An open and reliable container runtime
