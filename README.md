@@ -32,10 +32,10 @@ sudo nano -w /etc/dphys-swapfile
 
 ### upgrade
 
-```bash
-sudo apt-get update
-sudo apt-get upgrade -y
-sudo reboot
+```console
+$ sudo apt-get update
+$ sudo apt-get upgrade -y
+$ sudo reboot
 ```
 
 ## Docker環境構築
@@ -77,8 +77,8 @@ $ sudo usermod -aG docker pi
 
 この後，再ログインしてsudoナシでdocker叩けるか確認
 
-```bash
-docker images
+```console
+$ docker images
 ```
 
 ## パッケージング
@@ -131,10 +131,10 @@ $ sudo apt install ./deb/docker-ce_18.09.6~3-0~raspbian-buster_armhf.deb --no-in
 
 実行
 
-```bash
-sudo docker images
-sudo docker run --rm idein/actcast-rpi-app-base:buster echo hello
-hello
+```console
+$ sudo docker images
+$ sudo docker run --rm idein/actcast-rpi-app-base:buster echo hello
+$ hello
 ```
 
 pi3環境でも同様に動作確認
