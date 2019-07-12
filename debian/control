@@ -1,5 +1,5 @@
 Package: containerd.io
-Version: 1.2.7-1
+Version: 1.2.3-1
 Architecture: armhf
 Maintainer: Containerd team <help@containerd.io>
 Depends: init-system-helpers (>= 1.18~), libc6 (>= 2.14), libseccomp2 (>= 2.3.0)

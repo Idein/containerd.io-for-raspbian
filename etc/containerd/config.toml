@@ -15,6 +15,3 @@ disabled_plugins = ["cri"]
 #  uid = 0
 #  gid = 0
 #  level = "info"
-
-[plugins.linux]
-  no_shim = true

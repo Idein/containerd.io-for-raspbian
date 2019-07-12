@@ -2,7 +2,7 @@ FROM idein/actcast-rpi-app-base:buster
 
 # git tag
 ARG RUNC_VERSION_TAG="v1.0.0-rc8"
-ARG CONTAINERD_VERSION_TAG="v1.2.7"
+ARG CONTAINERD_VERSION_TAG="v1.2.3"
 
 # raspbian, armv6l
 ENV GOOS linux
