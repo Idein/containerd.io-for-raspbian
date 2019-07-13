@@ -25,7 +25,7 @@ RUN go get -d github.com/opencontainers/runc \
 RUN go get -d github.com/containerd/containerd \
  && cd go/src/github.com/containerd/containerd \
  && git checkout ${CONTAINERD_VERSION_TAG} \
- && make GO_BUILD_FLAGS='-N -l' \
+ && make GO_BUILD_FLAGS="-gcflags='-N -l'" \
  && make install DESTDIR=/root/pkgroot/usr
 
 ADD debian    /root/pkgroot/DEBIAN
