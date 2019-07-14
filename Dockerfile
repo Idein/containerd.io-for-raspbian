@@ -25,6 +25,7 @@ RUN go get -d github.com/opencontainers/runc \
 RUN go get -d github.com/containerd/containerd \
  && cd go/src/github.com/containerd/containerd \
  && git checkout ${CONTAINERD_VERSION_TAG} \
+ && sed -i 's/-s -w //' Makefile \
  && make GO_BUILD_FLAGS="-gcflags='-N -l'" \
  && make install DESTDIR=/root/pkgroot/usr
 
