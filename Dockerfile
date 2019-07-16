@@ -4,6 +4,9 @@ FROM idein/actcast-rpi-app-base:buster
 ARG RUNC_VERSION_TAG="v1.0.0-rc8"
 ARG CONTAINERD_VERSION_TAG="v1.2.7"
 
+# GOPATH
+ENV GOPATH /root/go
+
 # raspbian, armv6l
 ENV GOOS linux
 ENV GOARCH arm
@@ -25,8 +28,7 @@ RUN go get -d github.com/opencontainers/runc \
 RUN go get -d github.com/containerd/containerd \
  && cd go/src/github.com/containerd/containerd \
  && git checkout ${CONTAINERD_VERSION_TAG} \
- && sed -i 's/-s -w //' Makefile \
- && make GO_BUILD_FLAGS="-gcflags='-N -l'" \
+ && make \
  && make install DESTDIR=/root/pkgroot/usr
 
 ADD debian    /root/pkgroot/DEBIAN
