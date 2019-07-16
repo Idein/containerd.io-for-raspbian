@@ -1,32 +1,27 @@
-FROM idein/actcast-rpi-app-base:buster
+FROM idein/golang:1.13-rc-buster
 
-# git tag
-ARG RUNC_VERSION_TAG="v1.0.0-rc8"
-ARG CONTAINERD_VERSION_TAG="v1.2.7"
-
-# GOPATH
-ENV GOPATH /root/go
+# Install dependencies
+RUN apt-get update \
+ && apt-get upgrade -y \
+ && apt-get install -y git protobuf-compiler btrfs-tools libbtrfs-dev libseccomp-dev build-essential pkg-config fakeroot
 
 # raspbian, armv6l
 ENV GOOS linux
 ENV GOARCH arm
 ENV GOARM 6
 
-# Install dependencies
-RUN apt-get update \
- && apt-get upgrade -y \
- && apt-get install -y git golang-go protobuf-compiler btrfs-tools libbtrfs-dev libseccomp-dev build-essential pkg-config fakeroot
-
 # Build runc
+ARG RUNC_VERSION_TAG="v1.0.0-rc8"
 RUN go get -d github.com/opencontainers/runc \
- && cd go/src/github.com/opencontainers/runc/ \
+ && cd ${GOPATH}/src/github.com/opencontainers/runc/ \
  && git checkout ${RUNC_VERSION_TAG} \
  && make \
  && make install BINDIR=/root/pkgroot/usr/sbin
 
 # Build containerd
+ARG CONTAINERD_VERSION_TAG="v1.2.7"
 RUN go get -d github.com/containerd/containerd \
- && cd go/src/github.com/containerd/containerd \
+ && cd ${GOPATH}/src/github.com/containerd/containerd \
  && git checkout ${CONTAINERD_VERSION_TAG} \
  && make \
  && make install DESTDIR=/root/pkgroot/usr

@@ -83,11 +83,50 @@ $ docker images
 
 ## パッケージング
 
+### golangイメージのベースイメージ作成
+
+raspbian向けgolangイメージを作るためのベースイメージをraspbianで作る
+
+```console
+$ git clone git@github.com:docker-library/buildpack-deps.git
+$ cd buildpack-deps
+$ git rev-parse HEAD
+fa587a0d10fd627c1890345db640d1a55cfab3fc
+$ cd buster/curl
+$ nano -w Dockerfile
+-FROM debian:buster
++FROM idein/actcast-rpi-app-base:buster # 大本のベースイメージをraspbian buster のdebootstrap最小構成に
+$ docker build . -t idein/buildpack-deps:buster-curl
+$ cd ../scm
+$ nano -w Dockerfile
+-FROM buildpack-deps:buster-curl
++FROM idein/buildpack-deps:buster-curl
+$ docker build . -t idein/buildpack-deps:buster-scm
+$ cd
+```
+
+### raspbian向けのgolangイメージ作成
+
+```console
+$ git clone git@github.com:docker-library/golang.git
+$ cd golang
+$ git rev-parse HEAD
+103d42338bd9c3f661ade41f39dbc88fe9dc83a3
+$ cd 1.13-rc/buster
+$ nano -w Dockerfile
+-FROM buildpack-deps:stretch-scm
++FROM idein/buildpack-deps:buster-scm
+$ docker build . -t idein/golang:1.13-rc-buster
+$ cd
+```
+
+### `containerd.io` パッケージング
+
 ```console
 $ git clone https://github.com/Idein/containerd.io-for-raspbian
 $ cd containerd.io-for-raspbian
-$ docker build -t containerd-pkg-builder .
-$ docker run -v $(pwd):/root/deb containerd-pkg-builder
+$ docker build -t containerd-pkg-builder:1.2.7 .
+$ docker run -v $(pwd):/root/deb containerd-pkg-builder:1.2.7
 ```
 
 取り出しておく
@@ -98,13 +137,11 @@ $ scp pi@pi0.local:containerd.io-for-raspbian/containerd.io_1.2.7-1_armhf.deb .
 
 ## 動作確認
 
-
-[raspbian buster](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-06-24/2019-06-20-raspbian-buster-lite.zip)を焼いて起動．以下，パッケージング時と同様にsshできたとこから
+[raspbian buster](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-07-12/2019-07-10-raspbian-buster-lite.zip)を焼いて起動．以下，パッケージング時と同様にsshできたとこから
 
 おやくそく
 
 ```console
-$ sudo apt-get update --allow-releaseinfo-change # https://www.raspberrypi.org/forums/viewtopic.php?t=245073
 $ sudo apt-get update
 $ sudo apt-get upgrade -y
 $ sudo reboot
