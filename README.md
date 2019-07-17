@@ -176,3 +176,8 @@ $ hello
 ```
 
 pi3環境でも同様に動作確認
+
+
+## 注意事項
+
+現時点のcontainerd(か，ARM go runtime)にはcontainerd-shimがタイミングでSEGVするバグがある．
