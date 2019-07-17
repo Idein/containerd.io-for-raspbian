@@ -112,11 +112,12 @@ $ git clone git@github.com:docker-library/golang.git
 $ cd golang
 $ git rev-parse HEAD
 103d42338bd9c3f661ade41f39dbc88fe9dc83a3
-$ cd 1.13-rc/buster
+$ cp -r 1.12/{stretch,buster}
+$ cd 1.12/buster
 $ nano -w Dockerfile
 -FROM buildpack-deps:stretch-scm
 +FROM idein/buildpack-deps:buster-scm
-$ docker build . -t idein/golang:1.13-rc-buster
+$ docker build . -t idein/golang:1.12-buster
 $ cd
 ```
 

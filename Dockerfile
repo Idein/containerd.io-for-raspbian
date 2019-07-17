@@ -1,4 +1,4 @@
-FROM idein/golang:1.13-rc-buster
+FROM idein/golang:1.12-buster
 
 # Install dependencies
 RUN apt-get update \
