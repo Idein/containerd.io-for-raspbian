@@ -1,4 +1,4 @@
-FROM idein/golang:1.12-buster
+FROM idein/golang:1.13-buster
 
 # Install dependencies
 RUN apt-get update \
@@ -11,7 +11,7 @@ ENV GOARCH arm
 ENV GOARM 6
 
 # Build runc
-ARG RUNC_VERSION_TAG="v1.0.0-rc8"
+ARG RUNC_VERSION_TAG="v1.0.0-rc9"
 RUN go get -d github.com/opencontainers/runc \
  && cd ${GOPATH}/src/github.com/opencontainers/runc/ \
  && git checkout ${RUNC_VERSION_TAG} \
@@ -19,7 +19,7 @@ RUN go get -d github.com/opencontainers/runc \
  && make install BINDIR=/root/pkgroot/usr/sbin
 
 # Build containerd
-ARG CONTAINERD_VERSION_TAG="v1.2.7"
+ARG CONTAINERD_VERSION_TAG="v1.2.10"
 RUN go get -d github.com/containerd/containerd \
  && cd ${GOPATH}/src/github.com/containerd/containerd \
  && git checkout ${CONTAINERD_VERSION_TAG} \
