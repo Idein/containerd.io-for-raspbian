@@ -98,6 +98,7 @@ cd ../scm
 nano -w Dockerfile
 -FROM buildpack-deps:buster-curl
 +FROM idein/buildpack-deps:buster-curl
+docker build . -t idein/buildpack-deps:buster-scm
 cd
 ```
 
