@@ -88,7 +88,7 @@ raspbian向けgolangイメージを作るためのベースイメージをraspbi
 git clone https://github.com/docker-library/buildpack-deps
 cd buildpack-deps
 git rev-parse HEAD
-2583ce5f75af115a0a9eaf948e19d99bcb17f4dc
+1e2e728fe41a84c16bc93dcd788d40f93f83fb11
 cd buster/curl
 nano -w Dockerfile
 -FROM debian:buster
@@ -108,12 +108,12 @@ cd
 git clone https://github.com/docker-library/golang
 cd golang
 git rev-parse HEAD
-4cd30a13eca195db17474df090d84d2901ddf3d6
-cd 1.13/buster/
+37413a416f71baeef1d0b2156df20721405a5a70
+cd 1.14/buster/
 nano -w Dockerfile
 -FROM buildpack-deps:stretch-scm
 +FROM idein/buildpack-deps:buster-scm
-docker build . -t idein/golang:1.13-buster
+docker build . -t idein/golang:1.14-buster
 cd
 ```
 
@@ -122,14 +122,14 @@ cd
 ```console
 git clone https://github.com/Idein/containerd.io-for-raspbian
 cd containerd.io-for-raspbian
-docker build -t containerd-pkg-builder:1.2.10 .
-docker run -v $(pwd):/root/deb containerd-pkg-builder:1.2.10
+docker build -t containerd-pkg-builder:1.2.13 .
+docker run -v $(pwd):/root/deb containerd-pkg-builder:1.2.13
 ```
 
 取り出しておく
 
 ```console
-$ scp pi@pi0.local:containerd.io-for-raspbian/containerd.io_1.2.10-1_armhf.deb .
+$ scp pi@pi0.local:containerd.io-for-raspbian/containerd.io_1.2.13-1_armhf.deb .
 ```
 
 ## 動作確認
@@ -147,20 +147,20 @@ $ sudo reboot
 作ったパッケージを送り込んでおく．
 
 ```console
-$ scp containerd.io_1.2.10-1_armhf.deb pi@testpi.local:
+$ scp containerd.io_1.2.13-1_armhf.deb pi@testpi.local:
 ```
 
 インストール
 
 ```console
-$ sudo apt install ./containerd.io_1.2.10-1_armhf.deb
+$ sudo apt install ./containerd.io_1.2.13-1_armhf.deb
 ```
 
 [docker-ceを拾ってきて](https://github.com/Idein/docker-ce-for-raspbian-buster/releases)インストール
 
 ```console
-$ sudo apt install ./deb/docker-ce-cli_19.03.5~3-0~raspbian-buster_armhf.deb --no-install-recommends
-$ sudo apt install ./deb/docker-ce_19.03.5~3-0~raspbian-buster_armhf.deb --no-install-recommends
+$ sudo apt install ./deb/docker-ce-cli_19.03.8~3-0~raspbian-buster_armhf.deb --no-install-recommends
+$ sudo apt install ./deb/docker-ce_19.03.8~3-0~raspbian-buster_armhf.deb --no-install-recommends
 ```
 
 実行
@@ -177,3 +177,4 @@ pi3環境でも同様に動作確認
 ## 注意事項
 
 現時点のcontainerd(というか，go 1.13のARM runtime)にはcontainerd-shimがタイミングでSEGVする[バグ](https://go-review.googlesource.com/c/go/+/192937#message-71fa1ed3267bdd59342bed49b86859a779721dfb)がある．
+1.14でビルドするようになったので生じなくなったかもしれない．
